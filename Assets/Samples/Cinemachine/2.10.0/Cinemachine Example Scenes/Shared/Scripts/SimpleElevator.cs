@@ -1,27 +1,22 @@
 using UnityEngine;
 
-namespace Cinemachine.Examples
-{
+namespace Cinemachine.Examples {
     /// <summary>
     /// Moves transform between minY and maxY with the specified speed.
     /// </summary>
-    public class SimpleElevator : MonoBehaviour
-    {
+    public class SimpleElevator : MonoBehaviour {
         public float minY, maxY;
         public float speed;
         public bool on;
 
         float m_Direction = 1;
 
-        void FixedUpdate()
-        {
-            if (transform.position.y < minY)
-            {
+        void FixedUpdate() {
+            if (transform.position.y < minY) {
                 m_Direction = 1f;
             }
 
-            if (transform.position.y > maxY)
-            {
+            if (transform.position.y > maxY) {
                 m_Direction = -1f;
             }
 
