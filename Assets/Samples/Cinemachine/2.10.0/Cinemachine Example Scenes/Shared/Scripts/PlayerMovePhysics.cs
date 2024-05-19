@@ -1,10 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Cinemachine.Examples
-{
-    public class PlayerMovePhysics : MonoBehaviour
-    {
+namespace Cinemachine.Examples {
+    public class PlayerMovePhysics : MonoBehaviour {
         public float speed = 5;
         public bool worldDirection = true;
         public bool rotatePlayer = true;
@@ -14,35 +12,29 @@ namespace Cinemachine.Examples
 
         Rigidbody rb;
 
-        void Start()
-        {
+        void Start() {
             rb = GetComponent<Rigidbody>();
         }
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             transform.position += new Vector3(10, 0, 0);
         }
 
-        void FixedUpdate()
-        {
+        void FixedUpdate() {
 #if ENABLE_LEGACY_INPUT_MANAGER
             Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 
             //input = Vector3.forward;
-            if (input.magnitude > 0)
-            {
+            if (input.magnitude > 0) {
                 Vector3 fwd = worldDirection
                     ? Vector3.forward
                     : transform.position - Camera.main.transform.position;
                 fwd.y = 0;
                 fwd = fwd.normalized;
-                if (fwd.magnitude > 0.001f)
-                {
+                if (fwd.magnitude > 0.001f) {
                     Quaternion inputFrame = Quaternion.LookRotation(fwd, Vector3.up);
                     input = inputFrame * input;
-                    if (input.magnitude > 0.001f)
-                    {
+                    if (input.magnitude > 0.001f) {
                         rb.AddForce(speed * input);
                         if (rotatePlayer)
                             transform.rotation = Quaternion.LookRotation(input.normalized, Vector3.up);

@@ -1,15 +1,12 @@
 using UnityEngine;
 
-namespace Cinemachine.Examples
-{
-    public static class InputSystemHelper
-    {
+namespace Cinemachine.Examples {
+    public static class InputSystemHelper {
         static float s_LastMessageTime = -10;
+
         // Logs warning every 5 seconds
-        public static void EnableBackendsWarningMessage()
-        {
-            if (Time.realtimeSinceStartup - s_LastMessageTime > 5)
-            {
+        public static void EnableBackendsWarningMessage() {
+            if (Time.realtimeSinceStartup - s_LastMessageTime > 5) {
                 Debug.Log(
                     "Old input backends are disabled. Cinemachine examples use Unity’s classic input system. " +
                     "To enable classic input: Edit > Project Settings > Player, " +

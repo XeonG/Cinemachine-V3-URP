@@ -1,17 +1,14 @@
 ﻿using System;
-using Cinemachine.Utility;
+using Unity.Cinemachine;
 using UnityEngine;
 
-namespace Cinemachine.Examples
-{
-    public class PlayerMove : MonoBehaviour
-    {
+namespace Cinemachine.Examples {
+    public class PlayerMove : MonoBehaviour {
         public float Speed;
         public float VelocityDamping;
         public float JumpTime;
 
-        public enum ForwardMode
-        {
+        public enum ForwardMode {
             Camera,
             Player,
             World
@@ -28,8 +25,7 @@ namespace Cinemachine.Examples
         float m_currentJumpSpeed;
         float m_restY;
 
-        private void Reset()
-        {
+        private void Reset() {
             Speed = 5;
             InputForward = ForwardMode.Camera;
             RotatePlayer = true;
@@ -39,20 +35,17 @@ namespace Cinemachine.Examples
             m_currentJumpSpeed = 0;
         }
 
-        private void OnEnable()
-        {
+        private void OnEnable() {
             m_currentJumpSpeed = 0;
             m_restY = transform.position.y;
             SpaceAction -= Jump;
             SpaceAction += Jump;
         }
 
-        void Update()
-        {
+        void Update() {
 #if ENABLE_LEGACY_INPUT_MANAGER
             Vector3 fwd;
-            switch (InputForward)
-            {
+            switch (InputForward) {
                 case ForwardMode.Camera:
                     fwd = Camera.main.transform.forward;
                     break;
@@ -80,8 +73,7 @@ namespace Cinemachine.Examples
             m_currentVleocity += Damper.Damp(deltaVel, VelocityDamping, dt);
 
             transform.position += m_currentVleocity * dt;
-            if (RotatePlayer && m_currentVleocity.sqrMagnitude > 0.01f)
-            {
+            if (RotatePlayer && m_currentVleocity.sqrMagnitude > 0.01f) {
                 var qA = transform.rotation;
                 var qB = Quaternion.LookRotation(
                     (InputForward == ForwardMode.Player && Vector3.Dot(fwd, m_currentVleocity) < 0)
@@ -95,8 +87,7 @@ namespace Cinemachine.Examples
                 m_currentJumpSpeed -= 10 * dt;
             var p = transform.position;
             p.y += m_currentJumpSpeed * dt;
-            if (p.y < m_restY)
-            {
+            if (p.y < m_restY) {
                 p.y = m_restY;
                 m_currentJumpSpeed = 0;
             }
@@ -112,8 +103,7 @@ namespace Cinemachine.Examples
 #endif
         }
 
-        public void Jump()
-        {
+        public void Jump() {
             m_currentJumpSpeed += 10 * JumpTime * 0.5f;
         }
     }
