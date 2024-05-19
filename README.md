@@ -1,0 +1,1 @@
+Contains some updated Cinemachine v2.10 samples that have been updated to Unity 6 URP pipeline with Cinemachine V3.10 components.
