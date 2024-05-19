@@ -1,22 +1,21 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
-namespace Cinemachine.Examples
-{
+namespace Cinemachine.Examples {
     /// <summary>
     /// An example add-on module for Cinemachine Virtual Camera for controlling
     /// the FadeOut shader included in our example package.
     /// </summary>
     [AddComponentMenu("")] // Hide in menu
     [ExecuteAlways]
-    public class CinemachineFadeOutNearbyObjects : CinemachineExtension
-    {
+    public class CinemachineFadeOutNearbyObjects : CinemachineExtension {
         /// <summary>
         /// Radius of the look at target.
         /// </summary>
         [Tooltip("Radius of the look at target.")]
         public float m_LookAtTargetRadius = 1;
-    
+
         /// <summary>
         /// Minimum distance to have fading out effect in front of the camera.
         /// </summary>
@@ -34,9 +33,9 @@ namespace Cinemachine.Examples
         /// distance between this virtual camera and LookAt target minus m_LookAtTargetRadius.
         /// </summary>
         [Tooltip("If true, MaxDistance will be set to " +
-            "distance between this virtual camera and LookAt target minus LookAtTargetRadius.")]
+                 "distance between this virtual camera and LookAt target minus LookAtTargetRadius.")]
         public bool m_SetToCameraToLookAtDistance = false;
-    
+
         /// <summary>
         /// Material using the FadeOut shader.
         /// </summary>
@@ -55,25 +54,22 @@ namespace Cinemachine.Examples
         /// <param name="deltaTime">The current applicable deltaTime</param>
         protected override void PostPipelineStageCallback(
             CinemachineVirtualCameraBase vcam,
-            CinemachineCore.Stage stage, ref CameraState state, float deltaTime)
-        {
-            if (stage == CinemachineCore.Stage.Finalize)
-            {
-                if (m_FadeOutMaterial == null || !m_FadeOutMaterial.HasProperty(k_MaxDistanceID) || 
+            CinemachineCore.Stage stage, ref CameraState state, float deltaTime) {
+            if (stage == CinemachineCore.Stage.Finalize) {
+                if (m_FadeOutMaterial == null || !m_FadeOutMaterial.HasProperty(k_MaxDistanceID) ||
                     !m_FadeOutMaterial.HasProperty(k_MinDistanceID)) return;
-            
-                if (m_SetToCameraToLookAtDistance && vcam.LookAt != null)
-                {
-                    m_MaxDistance = Vector3.Distance(vcam.transform.position, vcam.LookAt.position) - m_LookAtTargetRadius;
+
+                if (m_SetToCameraToLookAtDistance && vcam.LookAt != null) {
+                    m_MaxDistance = Vector3.Distance(vcam.transform.position, vcam.LookAt.position) -
+                                    m_LookAtTargetRadius;
                 }
 
                 m_FadeOutMaterial.SetFloat(k_MaxDistanceID, m_MaxDistance);
                 m_FadeOutMaterial.SetFloat(k_MinDistanceID, m_MinDistance);
             }
         }
-        
-        void OnValidate()
-        {
+
+        void OnValidate() {
             m_LookAtTargetRadius = Math.Max(0, m_LookAtTargetRadius);
             m_MinDistance = Math.Max(0, m_MinDistance);
             m_MaxDistance = Math.Max(0, m_MaxDistance);
