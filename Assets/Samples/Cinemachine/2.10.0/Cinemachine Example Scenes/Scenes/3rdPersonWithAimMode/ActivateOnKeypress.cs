@@ -1,36 +1,29 @@
 ﻿using UnityEngine;
+using Unity.Cinemachine;
 
-namespace Cinemachine.Examples
-{
-    public class ActivateOnKeypress : MonoBehaviour
-    {
+namespace Cinemachine.Examples {
+    public class ActivateOnKeypress : MonoBehaviour {
         public KeyCode ActivationKey = KeyCode.LeftControl;
         public int PriorityBoostAmount = 10;
         public GameObject Reticle;
 
-        Cinemachine.CinemachineVirtualCameraBase vcam;
+        CinemachineVirtualCameraBase vcam;
         bool boosted = false;
 
-        void Start()
-        {
-            vcam = GetComponent<Cinemachine.CinemachineVirtualCameraBase>();
+        void Start() {
+            vcam = GetComponent<CinemachineVirtualCameraBase>();
         }
 
-        void Update()
-        {
+        void Update() {
 #if ENABLE_LEGACY_INPUT_MANAGER
-            if (vcam != null)
-            {
-                if (Input.GetKey(ActivationKey))
-                {
-                    if (!boosted)
-                    {
+            if (vcam != null) {
+                if (Input.GetKey(ActivationKey)) {
+                    if (!boosted) {
                         vcam.Priority += PriorityBoostAmount;
                         boosted = true;
                     }
                 }
-                else if (boosted)
-                {
+                else if (boosted) {
                     vcam.Priority -= PriorityBoostAmount;
                     boosted = false;
                 }

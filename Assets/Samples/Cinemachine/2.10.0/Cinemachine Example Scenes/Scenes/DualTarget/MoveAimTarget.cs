@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Cinemachine;
+using UnityEngine;
 
 namespace Cinemachine.Examples
 {
@@ -21,12 +22,12 @@ namespace Cinemachine.Examples
         /// <summary>The Vertical axis.  Value is -90..90. Controls the vertical orientation</summary>
         [Header("Axis Control")]
         [Tooltip("The Vertical axis.  Value is -90..90. Controls the vertical orientation")]
-        [AxisStateProperty]
+        // [Cinemachine.AxisStateProperty]
         public AxisState VerticalAxis;
 
         /// <summary>The Horizontal axis.  Value is -180..180.  Controls the horizontal orientation</summary>
         [Tooltip("The Horizontal axis.  Value is -180..180.  Controls the horizontal orientation")]
-        [AxisStateProperty]
+        // [Cinemachine.AxisStateProperty]
         public AxisState HorizontalAxis;
 
         private void OnValidate()
@@ -74,7 +75,7 @@ namespace Cinemachine.Examples
         private void PlaceTarget()
         {
             var rot = Quaternion.Euler(VerticalAxis.Value, HorizontalAxis.Value, 0);
-            var camPos = Brain.CurrentCameraState.RawPosition;
+            var camPos = Brain.State.RawPosition;
             transform.position = GetProjectedAimTarget(camPos + rot * Vector3.forward, camPos);
         }
 
@@ -130,7 +131,7 @@ namespace Cinemachine.Examples
             if (brain == null || brain != Brain || ReticleImage == null || brain.OutputCamera == null)
                 return;
             PlaceTarget(); // To eliminate judder
-            CameraState state = brain.CurrentCameraState;
+            CameraState state = brain.State;
             var cam = brain.OutputCamera;
             var r = cam.WorldToScreenPoint(transform.position);
             var r2 = new Vector2(r.x - cam.pixelWidth * 0.5f, r.y - cam.pixelHeight * 0.5f);
